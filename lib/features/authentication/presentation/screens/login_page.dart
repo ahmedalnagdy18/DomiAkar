@@ -5,6 +5,7 @@ import 'package:domi_aqar/core/fonts/app_text.dart';
 import 'package:domi_aqar/core/routes/navigation_helper.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -24,6 +25,7 @@ class _LoginPageState extends State<LoginPage> {
   bool isEmailError = false;
   bool isUserNameError = false;
   bool isPasswordError = false;
+  bool isObscuretext = true;
 
   @override
   void initState() {
@@ -71,6 +73,9 @@ class _LoginPageState extends State<LoginPage> {
                   Text('Email', style: AppTexts.smallHeading),
                   SizedBox(height: 6),
                   TextFieldWidget(
+                    inputFormatters: [
+                      FilteringTextInputFormatter.deny(RegExp(r'\s')),
+                    ],
                     autovalidateMode: AutovalidateMode.onUnfocus,
                     focusNode: _emailFocusNode,
                     hintText: 'Email*',
@@ -108,6 +113,18 @@ class _LoginPageState extends State<LoginPage> {
                     focusNode: _passswordFocusNode,
                     controller: _password,
                     hintText: 'Password*',
+                    suffixIcon: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          isObscuretext = !isObscuretext;
+                        });
+                      },
+                      child: Icon(
+                        size: 20,
+                        isObscuretext ? Icons.visibility_off : Icons.visibility,
+                      ),
+                    ),
+                    obscureText: isObscuretext,
                     onChanged: (value) {
                       if (value.isNotEmpty) {
                         setState(() {
