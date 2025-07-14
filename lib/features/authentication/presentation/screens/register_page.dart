@@ -20,15 +20,18 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _email = TextEditingController();
   final TextEditingController _password = TextEditingController();
   final TextEditingController _username = TextEditingController();
+  final TextEditingController _phone = TextEditingController();
 
   final _emailFocusNode = FocusNode();
   final _userNameFocusNode = FocusNode();
   final _passswordFocusNode = FocusNode();
+  final _phoneFocusNode = FocusNode();
   final _formKey = GlobalKey<FormState>();
 
   bool isEmailError = false;
   bool isUserNameError = false;
   bool isPasswordError = false;
+  bool isPhoneError = false;
   bool isObscuretext = true;
 
   @override
@@ -50,6 +53,14 @@ class _RegisterPageState extends State<RegisterPage> {
         });
       }
     });
+
+    _phoneFocusNode.addListener(() {
+      if (_phoneFocusNode.hasFocus && _phone.text.isNotEmpty) {
+        setState(() {
+          isPhoneError = false;
+        });
+      }
+    });
   }
 
   @override
@@ -60,6 +71,8 @@ class _RegisterPageState extends State<RegisterPage> {
     _emailFocusNode.dispose();
     _userNameFocusNode.dispose();
     _passswordFocusNode.dispose();
+    _phoneFocusNode.dispose();
+    _phone.dispose();
     super.dispose();
   }
 
@@ -69,13 +82,14 @@ class _RegisterPageState extends State<RegisterPage> {
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 22),
+          padding: const EdgeInsets.symmetric(horizontal: 22),
           child: SingleChildScrollView(
             child: Form(
               key: _formKey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  SizedBox(height: 22),
                   Text('Register Account', style: AppTexts.meduimHeading),
                   SizedBox(height: 12),
                   Text(
@@ -155,6 +169,53 @@ class _RegisterPageState extends State<RegisterPage> {
                     fillColor: isUserNameError == true
                         ? AppColors.error25
                         : Colors.white,
+                  ),
+                  SizedBox(height: 22),
+                  Text('Phone', style: AppTexts.smallHeading),
+                  SizedBox(height: 6),
+                  TextFieldWidget(
+                    maxLength: 11,
+                    counterText: '',
+                    keyboardType: TextInputType.number,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.digitsOnly,
+                    ],
+                    autovalidateMode: AutovalidateMode.onUnfocus,
+                    focusNode: _phoneFocusNode,
+                    controller: _phone,
+                    hintText: 'Phone Number*',
+                    onChanged: (value) {
+                      if (value.isNotEmpty) {
+                        setState(() {
+                          isPhoneError = false;
+                        });
+                      }
+                    },
+                    validator: (value) {
+                      if (_phone.text.isEmpty) {
+                        setState(() {
+                          isPhoneError = true;
+                        });
+                        return isPhoneError == true
+                            ? 'please write your phone number'
+                            : null;
+                      }
+                      if (_phone.text.length < 11) {
+                        setState(() {
+                          isPhoneError = true;
+                        });
+                        return isPhoneError == true
+                            ? 'please check your phone number'
+                            : null;
+                      } else {
+                        setState(() {
+                          isPhoneError = false;
+                        });
+                      }
+                      return null;
+                    },
+                    fillColor:
+                        isPhoneError == true ? AppColors.error25 : Colors.white,
                   ),
                   SizedBox(height: 22),
                   Text('Password', style: AppTexts.smallHeading),
@@ -242,11 +303,13 @@ class _RegisterPageState extends State<RegisterPage> {
                   MainAppButton(
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
-                        print('xxzxzxzx');
                         if (_isChecked == false) {
                           showDialog(
                               context: context,
                               builder: (context) => AlertDailogWidget());
+                        } else {
+                          NavigationHelper.goToSelectReceiveCodePage(
+                              context, false);
                         }
                       }
                     },

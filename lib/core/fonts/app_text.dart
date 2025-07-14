@@ -40,4 +40,8 @@ class AppTexts {
     fontSize: 14,
     color: Colors.black,
   );
+  static TextStyle verySmallBody = TextStyle(
+    fontSize: 12,
+    color: Colors.black,
+  );
 }

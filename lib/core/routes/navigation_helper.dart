@@ -1,5 +1,9 @@
+import 'package:domi_aqar/core/common/success_page.dart';
+import 'package:domi_aqar/features/authentication/presentation/screens/create_new_password.dart';
 import 'package:domi_aqar/features/authentication/presentation/screens/login_page.dart';
+import 'package:domi_aqar/features/authentication/presentation/screens/otp_page.dart';
 import 'package:domi_aqar/features/authentication/presentation/screens/register_page.dart';
+import 'package:domi_aqar/features/authentication/presentation/screens/select_receive_code_page.dart';
 import 'package:flutter/material.dart';
 
 class NavigationHelper {
@@ -16,6 +20,40 @@ class NavigationHelper {
         context,
         MaterialPageRoute(
           builder: (context) => LoginPage(),
+        ));
+  }
+
+  static void goToSelectReceiveCodePage(
+      BuildContext context, bool isForgetPassword) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) =>
+              SelectReceiveCodePage(isForgetPassword: isForgetPassword),
+        ));
+  }
+
+  static void goToOtpPage(BuildContext context, bool isForgetPassword) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => OtpPage(isForgetPassword: isForgetPassword),
+        ));
+  }
+
+  static void goToCreateNewPasswordPage(BuildContext context) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => CreateNewPassword(),
+        ));
+  }
+
+  static void goToSuccessPage(BuildContext context) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => SuccessPage(),
         ));
   }
 }

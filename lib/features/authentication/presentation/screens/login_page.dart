@@ -151,12 +151,16 @@ class _LoginPageState extends State<LoginPage> {
                         : Colors.white,
                   ),
                   SizedBox(height: 14),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: Text(
-                      'Forgot password ?',
-                      style: AppTexts.smallBody
-                          .copyWith(color: AppColors.primary600),
+                  InkWell(
+                    onTap: () => NavigationHelper.goToSelectReceiveCodePage(
+                        context, true),
+                    child: Align(
+                      alignment: Alignment.centerRight,
+                      child: Text(
+                        'Forgot password ?',
+                        style: AppTexts.smallBody
+                            .copyWith(color: AppColors.primary600),
+                      ),
                     ),
                   ),
                   SizedBox(height: 32),

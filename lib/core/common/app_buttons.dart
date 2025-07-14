@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class MainAppButton extends StatelessWidget {
   const MainAppButton(
       {super.key,
-      this.onPressed,
+      required this.onPressed,
       this.textColor,
       this.fontSize,
       required this.text,
@@ -20,15 +20,17 @@ class MainAppButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialButton(
+      disabledColor: AppColors.gray300,
       highlightElevation: 0,
       splashColor: Colors.transparent,
       onPressed: onPressed,
       color: buttonColor ?? AppColors.primary600,
       shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16.0),
-          side: BorderSide(
-            color: borderColor ?? AppColors.primary600,
-          )),
+        borderRadius: BorderRadius.circular(16.0),
+        // side: BorderSide(
+        //   color: borderColor ?? AppColors.primary600,
+        // ),
+      ),
       height: 56,
       elevation: 0,
       minWidth: double.infinity,
