@@ -1,9 +1,11 @@
 import 'package:domi_aqar/core/common/success_page.dart';
 import 'package:domi_aqar/features/authentication/presentation/screens/create_new_password.dart';
+import 'package:domi_aqar/features/authentication/presentation/screens/email_activation_page.dart';
 import 'package:domi_aqar/features/authentication/presentation/screens/login_page.dart';
 import 'package:domi_aqar/features/authentication/presentation/screens/otp_page.dart';
 import 'package:domi_aqar/features/authentication/presentation/screens/register_page.dart';
 import 'package:domi_aqar/features/authentication/presentation/screens/select_receive_code_page.dart';
+import 'package:domi_aqar/features/authentication/presentation/screens/select_role_page.dart';
 import 'package:flutter/material.dart';
 
 class NavigationHelper {
@@ -54,6 +56,24 @@ class NavigationHelper {
         context,
         MaterialPageRoute(
           builder: (context) => SuccessPage(),
+        ));
+  }
+
+  static void goToEmailActivationPage(
+      BuildContext context, bool isForgetPassword) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) =>
+              EmailActivationPage(isForgetPassword: isForgetPassword),
+        ));
+  }
+
+  static void goToSelectRolePage(BuildContext context) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => SelectRolePage(),
         ));
   }
 }

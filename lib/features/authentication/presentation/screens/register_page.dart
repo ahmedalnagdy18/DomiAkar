@@ -293,9 +293,11 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                       ),
                       SizedBox(width: 8),
-                      Text(
-                        'Agree with terms and privacy',
-                        style: AppTexts.regularBody,
+                      Flexible(
+                        child: Text(
+                          'Agree with terms and privacy',
+                          style: AppTexts.regularBody,
+                        ),
                       ),
                     ],
                   ),
@@ -337,9 +339,11 @@ class _RegisterPageState extends State<RegisterPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                        'Already have an account?',
-                        style: AppTexts.regularBody,
+                      Flexible(
+                        child: Text(
+                          'Already have an account?',
+                          style: AppTexts.regularBody,
+                        ),
                       ),
                       InkWell(
                         onTap: () => NavigationHelper.goToLoginPage(context),
@@ -350,7 +354,8 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                       ),
                     ],
-                  )
+                  ),
+                  SizedBox(height: 32),
                 ],
               ),
             ),

@@ -151,11 +151,11 @@ class _LoginPageState extends State<LoginPage> {
                         : Colors.white,
                   ),
                   SizedBox(height: 14),
-                  InkWell(
-                    onTap: () => NavigationHelper.goToSelectReceiveCodePage(
-                        context, true),
-                    child: Align(
-                      alignment: Alignment.centerRight,
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: InkWell(
+                      onTap: () => NavigationHelper.goToSelectReceiveCodePage(
+                          context, true),
                       child: Text(
                         'Forgot password ?',
                         style: AppTexts.smallBody
@@ -194,9 +194,11 @@ class _LoginPageState extends State<LoginPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                        'Don’t have account ?',
-                        style: AppTexts.regularBody,
+                      Flexible(
+                        child: Text(
+                          'Don’t have account ?',
+                          style: AppTexts.regularBody,
+                        ),
                       ),
                       InkWell(
                         onTap: () => NavigationHelper.goToRegisterPage(context),

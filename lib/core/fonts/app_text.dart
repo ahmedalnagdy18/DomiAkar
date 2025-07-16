@@ -13,13 +13,19 @@ class AppTexts {
   static TextStyle meduimHeading = TextStyle(
     color: Colors.black,
     fontWeight: FontWeight.bold,
-    fontSize: 24,
+    fontSize: 22,
   );
 
   static TextStyle smallHeading = TextStyle(
     color: Colors.black,
     fontWeight: FontWeight.bold,
     fontSize: 16,
+  );
+
+  static TextStyle appbar = TextStyle(
+    fontSize: 18,
+    color: Colors.black,
+    fontWeight: FontWeight.w500,
   );
 
 // body

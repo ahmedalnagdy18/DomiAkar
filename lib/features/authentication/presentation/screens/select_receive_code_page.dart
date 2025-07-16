@@ -64,6 +64,10 @@ class _SelectReceiveCodePageState extends State<SelectReceiveCodePage> {
                     NavigationHelper.goToOtpPage(
                         context, widget.isForgetPassword);
                   }
+                  if (selectedBorder == 1) {
+                    NavigationHelper.goToEmailActivationPage(
+                        context, widget.isForgetPassword);
+                  }
                 },
                 text: 'Continue',
               ),
@@ -106,16 +110,18 @@ class _SelectReceiveCodePageState extends State<SelectReceiveCodePage> {
               child: Icon(icon, color: AppColors.primary600),
             ),
             const SizedBox(width: 12),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  titleType,
-                  style:
-                      AppTexts.verySmallBody.copyWith(color: AppColors.gray400),
-                ),
-                Text(hint, style: AppTexts.smallBody),
-              ],
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    titleType,
+                    style: AppTexts.verySmallBody
+                        .copyWith(color: AppColors.gray400),
+                  ),
+                  Text(hint, style: AppTexts.smallBody),
+                ],
+              ),
             )
           ],
         ),

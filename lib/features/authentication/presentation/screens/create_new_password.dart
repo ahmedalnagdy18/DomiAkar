@@ -165,7 +165,7 @@ class _CreateNewPasswordState extends State<CreateNewPassword> {
                   ),
                 ),
                 MainAppButton(
-                  onPressed: (_formKey.currentState!.validate())
+                  onPressed: (_formKey.currentState?.validate() ?? false)
                       ? () {
                           NavigationHelper.goToSuccessPage(context);
                         }

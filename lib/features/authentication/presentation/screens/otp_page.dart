@@ -89,7 +89,7 @@ class _OtpPageState extends State<OtpPage> {
                                   context);
                             }
                             if (widget.isForgetPassword == false) {
-                              print('go to profile');
+                              NavigationHelper.goToSelectRolePage(context);
                             }
                           }
                         : null,
