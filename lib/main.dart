@@ -1,4 +1,5 @@
 import 'package:domi_aqar/core/common/app_asset_image.dart';
+import 'package:domi_aqar/features/home/presentation/screens/main_page.dart';
 import 'package:domi_aqar/features/onboarding/screens/onboarding_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -20,7 +21,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const PrecacheWrapper(child: OnboardingPage()),
+      home: const PrecacheWrapper(
+          child:
+              // OnboardingPage()
+              MainPage()),
     );
   }
 }

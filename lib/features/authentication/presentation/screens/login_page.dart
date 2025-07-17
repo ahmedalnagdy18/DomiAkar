@@ -167,7 +167,7 @@ class _LoginPageState extends State<LoginPage> {
                   MainAppButton(
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
-                        print('xxzxzxzx');
+                        NavigationHelper.goToMainPage(context);
                       }
                     },
                     text: 'Login',
