@@ -1,6 +1,7 @@
 import 'package:domi_aqar/core/common/app_asset_image.dart';
 import 'package:domi_aqar/features/onboarding/screens/onboarding_page.dart';
 import 'package:domi_aqar/firebase_options.dart';
+import 'package:domi_aqar/injection_container.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -14,6 +15,7 @@ void main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
+  await init();
   runApp(const MyApp());
 }
 
