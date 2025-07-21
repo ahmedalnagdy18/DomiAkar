@@ -1,12 +1,15 @@
 import 'package:domi_aqar/core/common/app_asset_image.dart';
-import 'package:domi_aqar/features/home/presentation/screens/main_page.dart';
 import 'package:domi_aqar/features/onboarding/screens/onboarding_page.dart';
+import 'package:domi_aqar/firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
@@ -20,12 +23,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: const PrecacheWrapper(
-          child:
-              // OnboardingPage()
-              MainPage()),
-    );
+        debugShowCheckedModeBanner: false,
+        home: const PrecacheWrapper(child: OnboardingPage()));
   }
 }
 
