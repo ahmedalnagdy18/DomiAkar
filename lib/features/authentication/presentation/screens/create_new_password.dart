@@ -1,8 +1,10 @@
 import 'package:domi_aqar/core/colors/app_colors.dart';
 import 'package:domi_aqar/core/common/app_buttons.dart';
 import 'package:domi_aqar/core/common/textfield.dart';
+import 'package:domi_aqar/core/extentions/app_extentions.dart';
 import 'package:domi_aqar/core/fonts/app_text.dart';
 import 'package:domi_aqar/core/routes/navigation_helper.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -165,11 +167,32 @@ class _CreateNewPasswordState extends State<CreateNewPassword> {
                   ),
                 ),
                 MainAppButton(
-                  onPressed: (_formKey.currentState?.validate() ?? false)
-                      ? () {
-                          NavigationHelper.goToSuccessPage(context);
+                  onPressed: () async {
+                    if (_formKey.currentState?.validate() ?? false) {
+                      try {
+                        // جرب تحديث كلمة المرور
+                        await FirebaseAuth.instance.currentUser
+                            ?.updatePassword(_newPasswordController.text);
+
+                        if (!mounted) return;
+
+                        // عرض رسالة نجاح
+                        showToastMessage(
+                            message: "Password changed successfully");
+
+                        // انتقل إلى صفحة النجاح
+                        NavigationHelper.goToSuccessPage(context);
+                      } on FirebaseAuthException catch (e) {
+                        String errorMessage = 'Something went wrong';
+                        if (e.code == 'requires-recent-login') {
+                          errorMessage =
+                              'You need to log in again before changing your password.';
                         }
-                      : null,
+
+                        showErrorToastMessage(message: errorMessage);
+                      }
+                    }
+                  },
                   text: 'Change password',
                 ),
               ],

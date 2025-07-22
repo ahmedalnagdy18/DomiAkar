@@ -1,8 +1,10 @@
 import 'package:domi_aqar/core/colors/app_colors.dart';
 import 'package:domi_aqar/core/common/main_appbar_widget.dart';
 import 'package:domi_aqar/core/fonts/app_text.dart';
+import 'package:domi_aqar/core/routes/navigation_helper.dart';
 import 'package:domi_aqar/features/profile/presentation/screens/edit_profile_page.dart';
 import 'package:domi_aqar/features/profile/presentation/widgets/upload_image_widget.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class MyProfilePage extends StatelessWidget {
@@ -57,7 +59,10 @@ class MyProfilePage extends StatelessWidget {
               ),
               SizedBox(height: 20),
               InkWell(
-                onTap: () {},
+                onTap: () async {
+                  FirebaseAuth.instance.signOut();
+                  NavigationHelper.goToLoginPage(context);
+                },
                 child: Text(
                   'Sign Out',
                   style:

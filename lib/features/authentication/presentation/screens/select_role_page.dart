@@ -1,8 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:domi_aqar/core/colors/app_colors.dart';
 import 'package:domi_aqar/core/common/app_buttons.dart';
 import 'package:domi_aqar/core/common/textfield.dart';
 import 'package:domi_aqar/core/extentions/app_extentions.dart';
 import 'package:domi_aqar/core/fonts/app_text.dart';
+import 'package:domi_aqar/core/routes/navigation_helper.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class SelectRolePage extends StatefulWidget {
@@ -15,6 +18,27 @@ class SelectRolePage extends StatefulWidget {
 class _SelectRolePageState extends State<SelectRolePage> {
   final TextEditingController _companyNameController = TextEditingController();
   String _selectedRole = 'person';
+  String? userName;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchUserName();
+  }
+
+  Future<void> fetchUserName() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      final doc = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.uid)
+          .get();
+      setState(() {
+        userName = doc.data()?['name'] ?? 'User';
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -78,7 +102,8 @@ class _SelectRolePageState extends State<SelectRolePage> {
                 SizedBox(height: 12),
                 Align(
                     alignment: Alignment.center,
-                    child: Text('Ahmed Alnagdy', style: AppTexts.regularBody)),
+                    child:
+                        Text(userName ?? 'User', style: AppTexts.regularBody)),
                 SizedBox(height: 33),
                 Text('Role', style: AppTexts.smallHeading),
                 SizedBox(height: 22),
@@ -104,20 +129,69 @@ class _SelectRolePageState extends State<SelectRolePage> {
                   ),
                 ],
                 SizedBox(height: 50),
+
                 MainAppButton(
-                  onPressed: () {
-                    if (_selectedRole == 'company') {
-                      if (_companyNameController.text.isEmpty) {
+                  onPressed: () async {
+                    final user = FirebaseAuth.instance.currentUser;
+
+                    if (user == null) {
+                      showErrorToastMessage(message: 'User not found');
+                      return;
+                    }
+
+                    // Check role
+                    String role = _selectedRole;
+                    String? companyName;
+                    if (role == 'company') {
+                      if (_companyNameController.text.trim().isEmpty) {
                         showErrorToastMessage(
-                            message: 'You must write campany name');
+                            message: 'You must write company name');
+                        return;
                       } else {
-                        //    print('push with campany name');
+                        companyName = _companyNameController.text.trim();
                       }
                     }
-                    // print('$_selectedRole');
+
+                    try {
+                      final userDoc = FirebaseFirestore.instance
+                          .collection('users')
+                          .doc(user.uid);
+
+                      final dataToUpdate = {
+                        'role': role,
+                        'updatedAt': FieldValue.serverTimestamp(),
+                        if (companyName != null) 'companyName': companyName,
+                        // 'image': imageUrl, // ممكن تضيف ده بعد رفع الصورة
+                      };
+
+                      await userDoc.update(dataToUpdate);
+
+                      // Navigator.pushReplacementNamed(context, '/home');
+                      if (!context.mounted) return;
+                      NavigationHelper.goToMainPage(context);
+                    } catch (e) {
+                      showErrorToastMessage(
+                          message: 'Failed to update user profile');
+                      print('Error updating user: $e');
+                    }
                   },
                   text: 'Continue',
                 ),
+
+                // MainAppButton(
+                //   onPressed: () {
+                //     if (_selectedRole == 'company') {
+                //       if (_companyNameController.text.isEmpty) {
+                //         showErrorToastMessage(
+                //             message: 'You must write campany name');
+                //       } else {
+                //         //    print('push with campany name');
+                //       }
+                //     }
+                //     // print('$_selectedRole');
+                //   },
+                //   text: 'Continue',
+                // ),
                 SizedBox(height: 22),
               ],
             ),

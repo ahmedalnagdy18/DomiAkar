@@ -2,17 +2,42 @@ import 'package:domi_aqar/core/colors/app_colors.dart';
 import 'package:domi_aqar/core/common/app_buttons.dart';
 import 'package:domi_aqar/core/fonts/app_text.dart';
 import 'package:domi_aqar/core/routes/navigation_helper.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class SelectReceiveCodePage extends StatefulWidget {
-  const SelectReceiveCodePage({super.key, required this.isForgetPassword});
+  const SelectReceiveCodePage(
+      {super.key,
+      required this.isForgetPassword,
+      this.email,
+      this.phoneNumber});
   final bool isForgetPassword;
+  final String? email;
+  final String? phoneNumber;
   @override
   State<SelectReceiveCodePage> createState() => _SelectReceiveCodePageState();
 }
 
 class _SelectReceiveCodePageState extends State<SelectReceiveCodePage> {
   int selectedBorder = 0;
+  String maskPhone(String phone) {
+    if (phone.length < 6) return phone;
+    return phone.replaceRange(2, phone.length - 2, '*' * (phone.length - 4));
+  }
+
+  String maskEmail(String email) {
+    final parts = email.split('@');
+    if (parts.length != 2) return email;
+
+    final username = parts[0];
+    final domain = parts[1];
+
+    if (username.length <= 2) {
+      return '${username[0]}***@$domain';
+    }
+
+    return '${username[0]}***${username[username.length - 1]}@$domain';
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +68,7 @@ class _SelectReceiveCodePageState extends State<SelectReceiveCodePage> {
                       selected: selectedBorder == 0,
                       onTap: () => setState(() => selectedBorder = 0),
                       titleType: 'Via phone',
-                      hint: '+20 10 98***488',
+                      hint: maskPhone(widget.phoneNumber ?? ""),
                       icon: Icons.phone_outlined,
                     ),
                     const SizedBox(height: 16),
@@ -52,21 +77,25 @@ class _SelectReceiveCodePageState extends State<SelectReceiveCodePage> {
                       selected: selectedBorder == 1,
                       onTap: () => setState(() => selectedBorder = 1),
                       titleType: 'Via email',
-                      hint: 'mu***@gmail.com',
+                      hint: maskEmail(widget.email ?? ""),
                       icon: Icons.messenger_outline_outlined,
                     ),
                   ],
                 ),
               ),
               MainAppButton(
-                onPressed: () {
+                onPressed: () async {
                   if (selectedBorder == 0) {
                     NavigationHelper.goToOtpPage(
                         context, widget.isForgetPassword);
                   }
                   if (selectedBorder == 1) {
-                    NavigationHelper.goToEmailActivationPage(
-                        context, widget.isForgetPassword);
+                    User? user = FirebaseAuth.instance.currentUser;
+                    if (user != null && !user.emailVerified) {
+                      NavigationHelper.goToEmailActivationPage(
+                          context, widget.isForgetPassword);
+                      await user.sendEmailVerification();
+                    }
                   }
                 },
                 text: 'Continue',

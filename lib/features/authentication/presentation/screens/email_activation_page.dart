@@ -2,6 +2,7 @@ import 'package:domi_aqar/core/colors/app_colors.dart';
 import 'package:domi_aqar/core/common/app_buttons.dart';
 import 'package:domi_aqar/core/fonts/app_text.dart';
 import 'package:domi_aqar/core/routes/navigation_helper.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class EmailActivationPage extends StatelessWidget {
@@ -41,12 +42,18 @@ class EmailActivationPage extends StatelessWidget {
                 ),
               ),
               MainAppButton(
-                onPressed: () {
-                  if (isForgetPassword == true) {
-                    NavigationHelper.goToCreateNewPasswordPage(context);
-                  }
-                  if (isForgetPassword == false) {
-                    NavigationHelper.goToSelectRolePage(context);
+                onPressed: () async {
+                  final user = FirebaseAuth.instance.currentUser;
+
+                  await user?.reload();
+                  if (!context.mounted) return;
+                  if (user != null && user.emailVerified) {
+                    if (isForgetPassword == true) {
+                      NavigationHelper.goToCreateNewPasswordPage(context);
+                    }
+                    if (isForgetPassword == false) {
+                      NavigationHelper.goToSelectRolePage(context);
+                    }
                   }
                 },
                 text: 'Continue',

@@ -99,7 +99,12 @@ class _RegisterPageState extends State<_RegisterPage> {
       listener: (context, state) {
         if (state is SucsessRegisterState) {
           print('okay');
-          NavigationHelper.goToSelectReceiveCodePage(context, false);
+          NavigationHelper.goToSelectReceiveCodePage(
+            context: context,
+            isForgetPassword: false,
+            email: _email.text,
+            phoneNumber: _phone.text,
+          );
         }
         if (state is ErrorRegisterState) {
           print(state.message);

@@ -27,12 +27,18 @@ class NavigationHelper {
   }
 
   static void goToSelectReceiveCodePage(
-      BuildContext context, bool isForgetPassword) {
+      {required BuildContext context,
+      required bool isForgetPassword,
+      String? email,
+      String? phoneNumber}) {
     Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) =>
-              SelectReceiveCodePage(isForgetPassword: isForgetPassword),
+          builder: (context) => SelectReceiveCodePage(
+            isForgetPassword: isForgetPassword,
+            email: email,
+            phoneNumber: phoneNumber,
+          ),
         ));
   }
 

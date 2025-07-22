@@ -2,6 +2,7 @@ import 'package:domi_aqar/core/common/app_buttons.dart';
 import 'package:domi_aqar/core/extentions/app_extentions.dart';
 import 'package:domi_aqar/core/fonts/app_text.dart';
 import 'package:domi_aqar/core/routes/navigation_helper.dart';
+import 'package:domi_aqar/core/shared_prefrances/shared_prefrances.dart';
 import 'package:domi_aqar/features/onboarding/widgets/dots_widget.dart';
 import 'package:domi_aqar/features/onboarding/widgets/onboarding_widget.dart';
 import 'package:flutter/material.dart';
@@ -59,8 +60,10 @@ class _OnboardingPageState extends State<OnboardingPage> {
                 child: _currentPage == 2
                     ? Text('')
                     : InkWell(
-                        onTap: () {
+                        onTap: () async {
                           NavigationHelper.goToRegisterPage(context);
+                          await SharedPrefrance.instanc
+                              .setOnboardingShown(true);
                         },
                         child: Text('Skip')),
               ),
@@ -117,9 +120,10 @@ class _OnboardingPageState extends State<OnboardingPage> {
               ),
               SizedBox(height: 30),
               MainAppButton(
-                onPressed: () {
+                onPressed: () async {
                   if (_currentPage == 2) {
                     NavigationHelper.goToRegisterPage(context);
+                    await SharedPrefrance.instanc.setOnboardingShown(true);
                   } else {
                     _pageController.nextPage(
                         duration: const Duration(milliseconds: 400),
