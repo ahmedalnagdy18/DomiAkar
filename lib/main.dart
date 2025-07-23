@@ -1,5 +1,6 @@
 import 'package:domi_aqar/core/common/app_asset_image.dart';
 import 'package:domi_aqar/core/shared_prefrances/shared_prefrances.dart';
+import 'package:domi_aqar/features/authentication/presentation/cubits/user_data_cubit/user_data_cubit.dart';
 import 'package:domi_aqar/features/authentication/presentation/screens/email_activation_page.dart';
 import 'package:domi_aqar/features/authentication/presentation/screens/login_page.dart';
 import 'package:domi_aqar/features/authentication/presentation/screens/select_role_page.dart';
@@ -10,6 +11,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'firebase_options.dart';
 import 'injection_container.dart';
@@ -33,9 +35,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: const PrecacheWrapper(child: LandingPage()),
+    return BlocProvider(
+      create: (context) =>
+          UserDataCubit(userDataUseCase: sl())..fetchUserData(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: const PrecacheWrapper(child: LandingPage()),
+      ),
     );
   }
 }
@@ -76,12 +82,12 @@ class _LandingPageState extends State<LandingPage> {
   @override
   void initState() {
     super.initState();
-
+    bool hasSeenOnboarding = SharedPrefrance.instanc.isOnboardingShown();
     // Listen to auth state changes
     FirebaseAuth.instance.authStateChanges().listen((user) {
       if (user == null) {
         setState(() {
-          _screen = const OnboardingPage();
+          _screen = hasSeenOnboarding == true ? LoginPage() : OnboardingPage();
           _loading = false;
         });
       } else {
@@ -93,7 +99,6 @@ class _LandingPageState extends State<LandingPage> {
   Future<void> _checkUserStatus(User user) async {
     await user.reload();
     final refreshedUser = FirebaseAuth.instance.currentUser;
-
     if (refreshedUser != null && refreshedUser.emailVerified) {
       final userDoc = await FirebaseFirestore.instance
           .collection('users')
@@ -120,13 +125,12 @@ class _LandingPageState extends State<LandingPage> {
 
   @override
   Widget build(BuildContext context) {
-    bool hasSeenOnboarding = SharedPrefrance.instanc.isOnboardingShown();
     if (_loading) {
       return const Scaffold(
         backgroundColor: Colors.white,
         body: Center(child: CircularProgressIndicator.adaptive()),
       );
     }
-    return hasSeenOnboarding == true ? LoginPage() : _screen;
+    return _screen;
   }
 }

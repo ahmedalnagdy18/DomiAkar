@@ -5,6 +5,7 @@ import 'package:domi_aqar/core/common/textfield.dart';
 import 'package:domi_aqar/core/extentions/app_extentions.dart';
 import 'package:domi_aqar/core/fonts/app_text.dart';
 import 'package:domi_aqar/core/routes/navigation_helper.dart';
+import 'package:domi_aqar/core/shared_prefrances/shared_prefrances.dart';
 import 'package:domi_aqar/features/authentication/domain/entity/sign_up_input.dart';
 import 'package:domi_aqar/features/authentication/presentation/cubits/register_cubit/register_cubit.dart';
 import 'package:domi_aqar/injection_container.dart';
@@ -96,7 +97,7 @@ class _RegisterPageState extends State<_RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<RegisterCubit, RegisterState>(
-      listener: (context, state) {
+      listener: (context, state) async {
         if (state is SucsessRegisterState) {
           print('okay');
           NavigationHelper.goToSelectReceiveCodePage(
@@ -105,6 +106,8 @@ class _RegisterPageState extends State<_RegisterPage> {
             email: _email.text,
             phoneNumber: _phone.text,
           );
+          await SharedPrefrance.instanc
+              .setUserName(key: 'userName', userName: _username.text);
         }
         if (state is ErrorRegisterState) {
           print(state.message);

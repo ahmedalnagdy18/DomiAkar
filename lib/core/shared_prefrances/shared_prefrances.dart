@@ -29,4 +29,16 @@ class SharedPrefrance {
       await initialization();
     }
   }
+
+  Future<bool> setUserName({required String key, required String userName}) {
+    return sharedPreferences.setString(key, userName);
+  }
+
+  String? getUserName(String key) {
+    return sharedPreferences.getString(key);
+  }
+
+  Future<bool> removeFromShared({required String key}) {
+    return sharedPreferences.remove(key);
+  }
 }
