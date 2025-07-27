@@ -1,3 +1,4 @@
+import 'package:domi_aqar/features/home/presentation/screens/home_page.dart';
 import 'package:domi_aqar/features/profile/presentation/screens/my_profile_page.dart';
 import 'package:domi_aqar/features/home/presentation/screens/timeline_page.dart';
 import 'package:domi_aqar/features/home/presentation/widgets/bottom_navigationbar_widget.dart';
@@ -17,6 +18,7 @@ class _MainPageState extends State<MainPage> {
   @override
   void initState() {
     name.addAll([
+      const HomePage(),
       const TimelinePage(),
       const TimelinePage(),
       const TimelinePage(),

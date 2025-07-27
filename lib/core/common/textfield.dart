@@ -26,6 +26,7 @@ class TextFieldWidget extends StatelessWidget {
   final Function(String)? onFieldSubmitted;
   final Color? fillColor;
   final AutovalidateMode? autovalidateMode;
+  final Color? textColor;
 
   const TextFieldWidget({
     super.key,
@@ -51,6 +52,7 @@ class TextFieldWidget extends StatelessWidget {
     this.onFieldSubmitted,
     this.fillColor,
     this.autovalidateMode,
+    this.textColor,
   });
 
   @override
@@ -62,7 +64,9 @@ class TextFieldWidget extends StatelessWidget {
       readOnly: readOnly ?? false,
       autofocus: autofocus ?? false,
       focusNode: focusNode,
-      style: AppTexts.regularBody,
+      style: AppTexts.regularBody.copyWith(
+        color: textColor,
+      ),
       onChanged: onChanged,
       obscureText: obscureText ?? false,
       maxLength: maxLength,

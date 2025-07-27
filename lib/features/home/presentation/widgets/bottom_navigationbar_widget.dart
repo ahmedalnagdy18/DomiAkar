@@ -25,6 +25,11 @@ class BottomNavigationBarWidget extends StatelessWidget {
           isAssetsImage: false,
         ),
         CustomBottomBarItems(
+          label: 'explore',
+          icon: Icons.explore_outlined,
+          isAssetsImage: false,
+        ),
+        CustomBottomBarItems(
           icon: Icons.favorite_outline,
           label: 'Favorite',
           isAssetsImage: false,

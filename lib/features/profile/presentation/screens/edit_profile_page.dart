@@ -1,3 +1,4 @@
+import 'package:domi_aqar/core/colors/app_colors.dart';
 import 'package:domi_aqar/core/common/app_buttons.dart';
 import 'package:domi_aqar/core/common/main_appbar_widget.dart';
 import 'package:domi_aqar/core/common/textfield.dart';
@@ -81,6 +82,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
               Text('Email', style: AppTexts.smallHeading),
               SizedBox(height: 8),
               TextFieldWidget(
+                textColor: AppColors.gray400,
+                readOnly: true,
                 inputFormatters: [
                   FilteringTextInputFormatter.deny(RegExp(r'\s')),
                 ],
