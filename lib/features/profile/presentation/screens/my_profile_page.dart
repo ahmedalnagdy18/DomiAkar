@@ -1,4 +1,5 @@
 import 'package:domi_aqar/core/colors/app_colors.dart';
+import 'package:domi_aqar/core/common/inkweel_widget.dart';
 import 'package:domi_aqar/core/common/main_appbar_widget.dart';
 import 'package:domi_aqar/core/fonts/app_text.dart';
 import 'package:domi_aqar/features/authentication/presentation/cubits/user_data_cubit/user_data_cubit.dart';
@@ -73,7 +74,7 @@ class _MyProfilePageState extends State<MyProfilePage>
                           onTap: () {},
                         ),
                         SizedBox(height: 20),
-                        InkWell(
+                        InkwellWidget(
                           onTap: () async {
                             showDialog(
                                 context: context,

@@ -1,6 +1,7 @@
 import 'package:domi_aqar/core/colors/app_colors.dart';
 import 'package:domi_aqar/core/common/alert_dailog_widget.dart';
 import 'package:domi_aqar/core/common/app_buttons.dart';
+import 'package:domi_aqar/core/common/inkweel_widget.dart';
 import 'package:domi_aqar/core/common/textfield.dart';
 import 'package:domi_aqar/core/extentions/app_extentions.dart';
 import 'package:domi_aqar/core/fonts/app_text.dart';
@@ -386,7 +387,7 @@ class _RegisterPageState extends State<_RegisterPage> {
                               style: AppTexts.regularBody,
                             ),
                           ),
-                          InkWell(
+                          InkwellWidget(
                             onTap: () =>
                                 NavigationHelper.goToLoginPage(context),
                             child: Text(

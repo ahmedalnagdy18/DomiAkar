@@ -1,4 +1,5 @@
 import 'package:domi_aqar/core/common/app_buttons.dart';
+import 'package:domi_aqar/core/common/inkweel_widget.dart';
 import 'package:domi_aqar/core/extentions/app_extentions.dart';
 import 'package:domi_aqar/core/fonts/app_text.dart';
 import 'package:domi_aqar/core/routes/navigation_helper.dart';
@@ -59,7 +60,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                 alignment: Alignment.topRight,
                 child: _currentPage == 2
                     ? Text('')
-                    : InkWell(
+                    : InkwellWidget(
                         onTap: () async {
                           NavigationHelper.goToRegisterPage(context);
                           await SharedPrefrance.instanc

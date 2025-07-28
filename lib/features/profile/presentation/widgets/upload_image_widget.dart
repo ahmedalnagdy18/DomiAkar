@@ -1,4 +1,5 @@
 import 'package:domi_aqar/core/colors/app_colors.dart';
+import 'package:domi_aqar/core/common/inkweel_widget.dart';
 import 'package:domi_aqar/features/authentication/domain/entity/model/user_data_model.dart';
 import 'package:flutter/material.dart';
 
@@ -21,7 +22,7 @@ class _UploadImageWidgetState extends State<UploadImageWidget> {
       child: Stack(
         alignment: Alignment.bottomRight,
         children: [
-          InkWell(
+          InkwellWidget(
             onTap: widget.ontap,
             child: Container(
               clipBehavior: Clip.antiAlias,
