@@ -55,7 +55,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.grayTrue100,
       appBar: CustomAppBar(title: 'Edit Profile'),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 22),

@@ -6,6 +6,7 @@ import 'package:domi_aqar/features/authentication/presentation/screens/otp_page.
 import 'package:domi_aqar/features/authentication/presentation/screens/register_page.dart';
 import 'package:domi_aqar/features/authentication/presentation/screens/select_receive_code_page.dart';
 import 'package:domi_aqar/features/authentication/presentation/screens/select_role_page.dart';
+import 'package:domi_aqar/features/home/presentation/screens/details_page.dart';
 import 'package:domi_aqar/features/home/presentation/screens/main_page.dart';
 import 'package:domi_aqar/features/home/presentation/screens/see_all_page.dart';
 import 'package:flutter/material.dart';
@@ -99,6 +100,14 @@ class NavigationHelper {
         context,
         MaterialPageRoute(
           builder: (context) => SeeMorePage(appbarTitle: appbarTitle),
+        ));
+  }
+
+  static void goToDetailsPage({required BuildContext context}) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => DetailsPage(),
         ));
   }
 }

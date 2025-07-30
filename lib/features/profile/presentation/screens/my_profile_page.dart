@@ -27,7 +27,7 @@ class _MyProfilePageState extends State<MyProfilePage>
     return BlocBuilder<UserDataCubit, UserDataState>(
       builder: (context, state) {
         return Scaffold(
-          backgroundColor: Colors.white,
+          backgroundColor: AppColors.grayTrue100,
           appBar: CustomAppBar(title: 'Profile'),
           body: state is SuccessUserData
               ? Padding(

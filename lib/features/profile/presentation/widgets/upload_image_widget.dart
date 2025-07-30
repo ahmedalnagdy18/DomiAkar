@@ -30,7 +30,7 @@ class _UploadImageWidgetState extends State<UploadImageWidget> {
               width: 100,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: AppColors.gray100,
+                color: AppColors.white,
               ),
               child: widget.userData.image.isNotEmpty
                   ? Image.network(widget.userData.image)
