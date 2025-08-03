@@ -1,3 +1,5 @@
+import 'package:domi_aqar/features/home/presentation/screens/booking_page.dart';
+import 'package:domi_aqar/features/home/presentation/screens/explore_page.dart';
 import 'package:domi_aqar/features/home/presentation/screens/home_page.dart';
 import 'package:domi_aqar/features/profile/presentation/screens/my_profile_page.dart';
 import 'package:domi_aqar/features/home/presentation/screens/timeline_page.dart';
@@ -19,9 +21,9 @@ class _MainPageState extends State<MainPage> {
   void initState() {
     name.addAll([
       const HomePage(),
+      const ExplorePage(),
       const TimelinePage(),
-      const TimelinePage(),
-      const TimelinePage(),
+      const BookingPage(),
       const MyProfilePage(),
     ]);
     super.initState();
